@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="./styles/github.min.css">
+    <meta charset="utf-8">
+    <title>Markdown Editor</title>
+    <script src="./js/showdown.min.js"></script>
+    <script src="./js/highlight.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #editor {
+            width: 50%;
+            height: 500px;
+            float: left;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        #preview {
+            width: 50%;
+            height: 500px;
+            float: right;
+            padding: 10px;
+            border-left: 1px solid gray;
+            overflow-y: auto;
+        }
+
+        pre code {
+            background-color: #f0f0f0;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Markdown Editor</h1>
+    <textarea id="editor" placeholder="Enter markdown here..."></textarea>
+    <div id="preview"></div>
+    <script>
+        var converter = new showdown.Converter();
+        var editor = document.getElementById("editor");
+        var preview = document.getElementById("preview");
+        editor.addEventListener("input", function () {
+            var html = converter.makeHtml(editor.value);
+            preview.innerHTML = html;
+            highlightAll();
+        });
+        function highlightAll() {
+            document.querySelectorAll("pre code").forEach(function (block) {
+                hljs.highlightElement(block);
+            });
+        }
+    </script>
+</body>
+
+</html>
